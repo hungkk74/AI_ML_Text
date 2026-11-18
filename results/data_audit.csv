@@ -1,0 +1,19 @@
+﻿Bộ dữ liệu,Bước,Trước,Sau,Loại bỏ
+Bộ 1,Tổng số dòng gốc (ghép các file),62920,62920,0
+Bộ 1,Bỏ nhãn trung tính (NEU)/nhãn lạ,31460,26762,4698
+Bộ 1,toàn bộ: bỏ câu rỗng sau làm sạch,26762,26687,75
+Bộ 1,toàn bộ: bỏ câu trùng nhưng nhãn mâu thuẫn,26687,25109,1578
+Bộ 1,toàn bộ: bỏ câu trùng nội dung,25109,21363,3746
+Bộ 1,Sau chia 80/20: train (%Tích cực=70.88%),17090,17090,0
+Bộ 1,Sau chia 80/20: test (%Tích cực=70.86%),4273,4273,0
+Bộ 2,train: số dòng gốc,11426,11426,0
+Bộ 2,train: bỏ nhãn trung tính,11426,10968,458
+Bộ 2,train: bỏ câu rỗng sau làm sạch,10968,10968,0
+Bộ 2,train: bỏ câu trùng nhưng nhãn mâu thuẫn,10968,10966,2
+Bộ 2,train: bỏ câu trùng nội dung,10966,10894,72
+Bộ 2,test: số dòng gốc,3166,3166,0
+Bộ 2,test: bỏ nhãn trung tính,3166,2999,167
+Bộ 2,test: bỏ câu rỗng sau làm sạch,2999,2999,0
+Bộ 2,test: bỏ câu trùng nhưng nhãn mâu thuẫn,2999,2999,0
+Bộ 2,test: bỏ câu trùng nội dung,2999,2994,5
+Bộ 2,test: loại câu trùng với train,2994,2949,45

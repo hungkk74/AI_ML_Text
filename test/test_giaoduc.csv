@@ -1,0 +1,41 @@
+﻿text,expected,category
+"Thầy giảng chậm rãi, ví dụ sinh động, em theo kịp bài",TÍCH CỰC,Giảng viên
+"Cô rất tâm huyết, luôn trả lời email của sinh viên",TÍCH CỰC,Giảng viên
+Giảng viên có kinh nghiệm thực tế nên bài học rất hay,TÍCH CỰC,Giảng viên
+"Thầy công bằng khi chấm điểm, góp ý bài rất chi tiết",TÍCH CỰC,Giảng viên
+"Cô vui tính, lớp học luôn có không khí thoải mái",TÍCH CỰC,Giảng viên
+"Nội dung môn học thiết thực, áp dụng được ngay vào đồ án",TÍCH CỰC,Môn học
+"Bài tập vừa sức, giúp em hiểu sâu kiến thức",TÍCH CỰC,Môn học
+"Giáo trình cập nhật, tài liệu tham khảo phong phú",TÍCH CỰC,Môn học
+"Môn này giúp em thay đổi cách tư duy, rất đáng học",TÍCH CỰC,Môn học
+"Phòng máy hiện đại, mạng nhanh, máy chiếu rõ nét",TÍCH CỰC,Cơ sở vật chất
+"Thư viện yên tĩnh, nhiều sách, nhân viên thân thiện",TÍCH CỰC,Cơ sở vật chất
+"Căng tin sạch sẽ, đồ ăn ngon và giá sinh viên",TÍCH CỰC,Cơ sở vật chất
+"Nhà trường thông báo lịch học rõ ràng, kịp thời",TÍCH CỰC,Tổ chức
+Phòng đào tạo giải quyết thủ tục nhanh gọn,TÍCH CỰC,Tổ chức
+"Hoạt động ngoại khóa bổ ích, em được học thêm nhiều kỹ năng",TÍCH CỰC,Tổ chức
+Em rất biết ơn thầy đã kiên nhẫn hướng dẫn nhóm em,TÍCH CỰC,Giảng viên
+Em thật sự yêu thích môn học này,TÍCH CỰC,Môn học
+"Phòng học rộng, điều hòa mát, bàn ghế mới",TÍCH CỰC,Cơ sở vật chất
+"Lịch thi sắp xếp hợp lý, không bị trùng môn",TÍCH CỰC,Tổ chức
+"Cô giải thích kỹ, em chưa hiểu chỗ nào cô cũng giảng lại",TÍCH CỰC,Giảng viên
+"Thầy giảng như đọc slide, em nghe không hiểu gì",TIÊU CỰC,Giảng viên
+"Cô hay bỏ tiết, dạy bù thì vội vàng qua loa",TIÊU CỰC,Giảng viên
+"Giảng viên chấm điểm thiếu công bằng, không giải thích rõ",TIÊU CỰC,Giảng viên
+"Thầy nói quá nhanh, giọng nhỏ, cuối lớp không nghe được",TIÊU CỰC,Giảng viên
+"Cô thiếu nhiệt tình, hỏi bài thì tỏ ra khó chịu",TIÊU CỰC,Giảng viên
+"Nội dung môn học nặng lý thuyết, xa rời thực tế",TIÊU CỰC,Môn học
+"Bài tập quá khó, không hướng dẫn, em rất áp lực",TIÊU CỰC,Môn học
+"Tài liệu cũ nát, nhiều lỗi sai chưa được sửa",TIÊU CỰC,Môn học
+"Môn này học xong chẳng đọng lại gì, rất lãng phí thời gian",TIÊU CỰC,Môn học
+"Phòng máy cũ, hay mất mạng, nhiều máy không bật lên được",TIÊU CỰC,Cơ sở vật chất
+"Nhà vệ sinh bẩn, nhiều nơi hỏng chưa được sửa",TIÊU CỰC,Cơ sở vật chất
+"Căng tin đông, đồ ăn đắt và chất lượng kém",TIÊU CỰC,Cơ sở vật chất
+"Thông báo đổi phòng sát giờ, sinh viên chạy loạn",TIÊU CỰC,Tổ chức
+"Phòng đào tạo làm thủ tục chậm, đi lại nhiều lần mà chưa xong",TIÊU CỰC,Tổ chức
+"Lịch thi dày đặc, các môn dồn vào cùng một tuần",TIÊU CỰC,Tổ chức
+Em thấy thất vọng vì thầy ít quan tâm đến sinh viên,TIÊU CỰC,Giảng viên
+"Em chán môn học này, học mãi không hiểu",TIÊU CỰC,Môn học
+"Phòng học nóng như lò, quạt chạy chậm rì",TIÊU CỰC,Cơ sở vật chất
+Học phí tăng nhưng chất lượng chẳng thay đổi,TIÊU CỰC,Tổ chức
+"Cô dạy lan man, không bám sát đề cương",TIÊU CỰC,Giảng viên

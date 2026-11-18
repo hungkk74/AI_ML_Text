@@ -1,0 +1,31 @@
+﻿id,comment,rating,label
+1,Mình rất hài lòng với đôi giày này,5,POS
+2,"Giao hàng chậm, hộp méo mó",2,NEG
+3,"Dùng tốt, đúng giá tiền",4,1
+4,Hàng không giống mô tả,1,0
+5,"Shop phục vụ chu đáo, sẽ quay lại",5,POS
+6,"Chất lượng kém, mới dùng đã bong tróc",1,NEG
+7,"Màn hình đẹp, chạy mượt",5,1
+8,"Pin yếu, sạc cả ngày vẫn không đầy",2,0
+9,Thầy dạy rất cuốn hút,5,POS
+10,"Giáo trình khó hiểu, ví dụ ít",2,NEG
+11,"Phòng học sạch sẽ, thoáng mát",4,1
+12,"Thông báo muộn, sinh viên không kịp chuẩn bị",2,0
+13,"Hương thơm dễ chịu, lưu lâu",5,POS
+14,"Mùi nồng, dùng xong đau đầu",1,NEG
+15,"Ăn ngon, phục vụ nhanh",4,1
+16,"Đợi món gần một tiếng, nhân viên thờ ơ",2,0
+17,Cô giảng bài rất dễ hiểu,5,POS
+18,"Môn học nhàm chán, học xong quên sạch",2,NEG
+19,"Ba lô bền, nhiều ngăn tiện dụng",5,1
+20,Khóa kéo hỏng sau hai tuần,1,0
+21,Điện thoại dùng ổn trong tầm giá,4,POS
+22,"Camera mờ, chụp thiếu sáng là hỏng ảnh",2,NEG
+23,"Thủ tục nhanh gọn, nhân viên hướng dẫn rõ",5,1
+24,"Làm việc chậm chạp, hỏi gì cũng bảo chờ",1,0
+25,"Đồ chơi chắc chắn, bé nhà mình rất mê",5,POS
+26,"Sơn bong tróc, có mùi lạ, không an toàn cho trẻ",1,NEG
+27,"Đáng tiền, sẽ giới thiệu bạn bè",5,1
+28,"Lãng phí tiền, tuyệt đối không nên mua",1,0
+29,"Bình thường, không có gì đặc biệt",3,NEU
+30,"Cũng được, tùy nhu cầu mỗi người",3,NEU

@@ -1,0 +1,41 @@
+﻿text,expected,category
+"Vải dày dặn, đường may chắc chắn, mặc rất thích",TÍCH CỰC,Chất lượng
+"Sản phẩm bền, dùng ba tháng vẫn như mới",TÍCH CỰC,Chất lượng
+"Hàng chính hãng, có tem bảo hành đầy đủ",TÍCH CỰC,Chất lượng
+"Chất lượng vượt xa mức giá, rất đáng mua",TÍCH CỰC,Chất lượng
+"Giao hàng siêu nhanh, shipper thân thiện",TÍCH CỰC,Giao hàng
+"Đóng gói kỹ lưỡng, hàng không móp méo gì",TÍCH CỰC,Giao hàng
+"Đặt sáng chiều đã nhận được hàng, quá nhanh",TÍCH CỰC,Giao hàng
+"Shop trả lời tin nhắn nhanh, tư vấn rất tận tâm",TÍCH CỰC,Dịch vụ
+"Đổi size dễ dàng, shop hỗ trợ nhiệt tình",TÍCH CỰC,Dịch vụ
+"Nhân viên chăm sóc khách hàng lịch sự, giải quyết nhanh",TÍCH CỰC,Dịch vụ
+Giá rẻ hơn ngoài cửa hàng mà chất lượng y hệt,TÍCH CỰC,Giá cả
+"Mua đúng đợt giảm giá, rất hời",TÍCH CỰC,Giá cả
+"Tai nghe âm thanh trong, bass chắc, pin dùng cả ngày",TÍCH CỰC,Điện tử
+"Laptop khởi động nhanh, chạy êm, màn hình sắc nét",TÍCH CỰC,Điện tử
+"Kem dưỡng thấm nhanh, da mềm mịn hẳn sau một tuần",TÍCH CỰC,Mỹ phẩm
+"Đồ ăn tươi ngon, đóng gói sạch sẽ, cả nhà đều thích",TÍCH CỰC,Thực phẩm
+"Giày đi êm chân, form đẹp, đúng size",TÍCH CỰC,Thời trang
+"Váy xinh lắm, màu lên ảnh còn đẹp hơn",TÍCH CỰC,Thời trang
+"Nồi chiên dùng tiện, dễ vệ sinh, nấu ăn nhanh hơn hẳn",TÍCH CỰC,Đồ gia dụng
+"Máy hút bụi mạnh, nhẹ, pin lâu",TÍCH CỰC,Đồ gia dụng
+"Hàng rách ngay lần mặc đầu tiên, chất vải mỏng tang",TIÊU CỰC,Chất lượng
+"Sản phẩm giả, không phải hàng chính hãng như quảng cáo",TIÊU CỰC,Chất lượng
+"Mới dùng một tuần đã hỏng, bảo hành thì chối",TIÊU CỰC,Chất lượng
+"Mùi hôi khó chịu, dùng xong bị dị ứng",TIÊU CỰC,Chất lượng
+"Chờ hơn mười ngày mới nhận được hàng, quá lâu",TIÊU CỰC,Giao hàng
+"Hộp bị ướt nhem, bên trong vỡ nát",TIÊU CỰC,Giao hàng
+"Shipper thái độ, quăng hàng xuống đất",TIÊU CỰC,Giao hàng
+"Nhắn tin không ai trả lời, thật sự quá tệ",TIÊU CỰC,Dịch vụ
+Shop từ chối đổi trả dù hàng lỗi từ nhà sản xuất,TIÊU CỰC,Dịch vụ
+"Nhân viên cáu gắt, trả lời qua loa cho xong",TIÊU CỰC,Dịch vụ
+Giá cao gấp đôi chỗ khác mà hàng chẳng ra gì,TIÊU CỰC,Giá cả
+"Phí ship quá đắt, tổng tiền vượt xa dự kiến",TIÊU CỰC,Giá cả
+"Tai nghe bị rè, một bên không nghe được",TIÊU CỰC,Điện tử
+"Laptop quạt kêu ồn, treo máy liên tục",TIÊU CỰC,Điện tử
+"Kem làm da nổi mụn đỏ, dùng xong hối hận",TIÊU CỰC,Mỹ phẩm
+"Đồ ăn nguội ngắt, có vị lạ, không dám ăn hết",TIÊU CỰC,Thực phẩm
+"Giày chật, đi một hôm là phồng rộp chân",TIÊU CỰC,Thời trang
+"Váy nhận về khác hẳn hình, màu nhìn rẻ tiền",TIÊU CỰC,Thời trang
+"Nồi chiên nóng bất thường, có mùi khét, rất lo",TIÊU CỰC,Đồ gia dụng
+"Máy hút bụi yếu, ồn, nghe là muốn trả hàng",TIÊU CỰC,Đồ gia dụng

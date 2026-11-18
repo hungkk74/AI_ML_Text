@@ -1,0 +1,67 @@
+﻿text,expected,category,domain
+"Sản phẩm dùng rất tốt, đóng gói cẩn thận, giao hàng nhanh, sẽ ủng hộ shop tiếp",TÍCH CỰC,Tích cực rõ,Mua sắm
+"Áo đẹp lắm, vải mềm mặc rất thoải mái, đúng như hình",TÍCH CỰC,Tích cực rõ,Mua sắm
+"Điện thoại chạy mượt, pin trâu, rất hài lòng với lần mua này",TÍCH CỰC,Tích cực rõ,Mua sắm
+"Shop tư vấn nhiệt tình, hàng chất lượng, giá hợp lý",TÍCH CỰC,Tích cực rõ,Mua sắm
+"Giao nhanh hơn dự kiến, sản phẩm y hệt mô tả, 5 sao",TÍCH CỰC,Tích cực rõ,Mua sắm
+"Mình mua lần thứ ba rồi, lần nào cũng ưng ý",TÍCH CỰC,Tích cực rõ,Mua sắm
+"Hàng kém chất lượng, dùng hai hôm là hỏng, thất vọng quá",TIÊU CỰC,Tiêu cực rõ,Mua sắm
+"Giao hàng chậm, đóng gói ẩu, sản phẩm bị móp méo",TIÊU CỰC,Tiêu cực rõ,Mua sắm
+"Sản phẩm không giống hình, màu xấu, phí tiền",TIÊU CỰC,Tiêu cực rõ,Mua sắm
+"Shop trả lời cộc lốc, không hỗ trợ đổi trả, sẽ không mua nữa",TIÊU CỰC,Tiêu cực rõ,Mua sắm
+"Máy nóng, hao pin cực nhanh, quá tệ so với giá tiền",TIÊU CỰC,Tiêu cực rõ,Mua sắm
+"Mua về dùng được một lần là bung chỉ, rất thất vọng",TIÊU CỰC,Tiêu cực rõ,Mua sắm
+"Thầy dạy rất nhiệt tình, dễ hiểu, bài giảng có nhiều ví dụ thực tế",TÍCH CỰC,Tích cực rõ,Giáo dục
+"Cô giảng bài cuốn hút, luôn quan tâm đến sinh viên",TÍCH CỰC,Tích cực rõ,Giáo dục
+"Môn học bổ ích, giáo trình rõ ràng, em học được nhiều điều",TÍCH CỰC,Tích cực rõ,Giáo dục
+"Giảng viên thân thiện, sẵn sàng giải đáp mọi thắc mắc",TÍCH CỰC,Tích cực rõ,Giáo dục
+"Cơ sở vật chất tốt, thư viện rộng rãi, phòng học thoáng mát",TÍCH CỰC,Tích cực rõ,Giáo dục
+"Thầy dạy nhanh quá, khó hiểu, slide chữ nhỏ không đọc được",TIÊU CỰC,Tiêu cực rõ,Giáo dục
+"Phòng học nóng, micro hay hỏng, môn này chán",TIÊU CỰC,Tiêu cực rõ,Giáo dục
+"Giáo trình lỗi thời, bài tập quá nhiều và không liên quan",TIÊU CỰC,Tiêu cực rõ,Giáo dục
+"Giảng viên đến lớp muộn, ít giải đáp, em rất thất vọng",TIÊU CỰC,Tiêu cực rõ,Giáo dục
+"Lịch thi dồn dập, thông báo muộn, nhà trường cần cải thiện",TIÊU CỰC,Tiêu cực rõ,Giáo dục
+"Không tệ chút nào, dùng rất ổn",TÍCH CỰC,Phủ định,Mua sắm
+Chẳng có gì để phàn nàn cả,TÍCH CỰC,Phủ định,Mua sắm
+"Không thể chê được, chất lượng quá tốt",TÍCH CỰC,Phủ định,Mua sắm
+Không đáng tiền chút nào,TIÊU CỰC,Phủ định,Mua sắm
+Chưa hài lòng lắm với chất lượng này,TIÊU CỰC,Phủ định,Mua sắm
+Bài giảng không hề dễ hiểu như em mong đợi,TIÊU CỰC,Phủ định,Giáo dục
+Hàng đẹp nhưng giao chậm quá,LẪN LỘN,Vừa khen vừa chê,Mua sắm
+Chất lượng tạm được nhưng giá hơi cao,LẪN LỘN,Vừa khen vừa chê,Mua sắm
+Shop nhiệt tình nhưng sản phẩm không như kỳ vọng,LẪN LỘN,Vừa khen vừa chê,Mua sắm
+"Pin tốt, màn hình đẹp, tiếc là loa hơi nhỏ",LẪN LỘN,Vừa khen vừa chê,Mua sắm
+Thầy dạy hay nhưng bài tập hơi nhiều,LẪN LỘN,Vừa khen vừa chê,Giáo dục
+Giáo trình đầy đủ nhưng phòng học quá nóng,LẪN LỘN,Vừa khen vừa chê,Giáo dục
+ok,KHÔNG RÕ,Ngắn/chung chung,Chung
+bình thường,KHÔNG RÕ,Ngắn/chung chung,Chung
+tạm được,KHÔNG RÕ,Ngắn/chung chung,Chung
+cũng được,KHÔNG RÕ,Ngắn/chung chung,Chung
+tốt,TÍCH CỰC,Ngắn/chung chung,Chung
+tệ,TIÊU CỰC,Ngắn/chung chung,Chung
+"hang dep lam, giao nhanh, dong goi can than",TÍCH CỰC,Không dấu,Mua sắm
+"san pham khong nhu mo ta, that vong",TIÊU CỰC,Không dấu,Mua sắm
+"hang loi, shop khong tra loi tin nhan",TIÊU CỰC,Không dấu,Mua sắm
+"thay day rat de hieu, nhiet tinh",TÍCH CỰC,Không dấu,Giáo dục
+"mon nay chan, day qua nhanh",TIÊU CỰC,Không dấu,Giáo dục
+"sp ok lắm shop ơi, đẹp xỉu luôn",TÍCH CỰC,Teencode/viết tắt,Mua sắm
+"hàng ko như mô tả, thất vọng vs shop",TIÊU CỰC,Teencode/viết tắt,Mua sắm
+"đỉnh của chóp, mua ủng hộ shop nha",TÍCH CỰC,Teencode/viết tắt,Mua sắm
+"giao hàng lâu vcl, đợi mãi mới nhận",TIÊU CỰC,Teencode/viết tắt,Mua sắm
+"thầy dạy hay lắm ạ, cảm ơn thầy nhiều",TÍCH CỰC,Teencode/viết tắt,Giáo dục
+Quá tuyệt vời 😍😍😍,TÍCH CỰC,Emoji,Mua sắm
+Thất vọng 😡😡,TIÊU CỰC,Emoji,Mua sắm
+huhu hàng lỗi rồi 😭,TIÊU CỰC,Emoji,Mua sắm
+Dùng ổn áp 🙂👍,TÍCH CỰC,Emoji,Mua sắm
+"Giao hàng nhanh ghê, chỉ mất có hai tuần",TIÊU CỰC,Mỉa mai,Mua sắm
+"Chất lượng tuyệt vời, dùng được đúng một ngày",TIÊU CỰC,Mỉa mai,Mua sắm
+"Thầy dạy hay thật, cả lớp ngủ gật hết",TIÊU CỰC,Mỉa mai,Giáo dục
+Cảm ơn shop đã gửi nhầm hàng cho tôi,TIÊU CỰC,Mỉa mai,Mua sắm
+"Mình đã đắn đo khá lâu trước khi đặt hàng vì sợ chất lượng không như quảng cáo, nhưng khi nhận được thì rất bất ngờ, sản phẩm tốt hơn mong đợi, đóng gói kỹ, shop còn tặng kèm quà nhỏ",TÍCH CỰC,Câu dài,Mua sắm
+"Đặt hàng từ tuần trước, gọi cho shop mấy lần đều không ai nghe máy, khi hàng đến thì sai màu, hỏi đổi trả thì bị từ chối với lý do đã bóc tem, thật sự rất tức giận",TIÊU CỰC,Câu dài,Mua sắm
+"Học kỳ này em được học với thầy, ban đầu em rất sợ môn này, nhưng cách thầy giảng bài từ cơ bản đến nâng cao giúp em hiểu và yêu thích môn học hơn rất nhiều",TÍCH CỰC,Câu dài,Giáo dục
+"Em mong nhà trường xem xét lại việc sắp xếp lịch học vì nhiều buổi bị dồn vào cùng một ngày, thông báo đổi phòng thì rất muộn, làm sinh viên phải chạy khắp nơi",TIÊU CỰC,Câu dài,Giáo dục
+Hôm nay trời mưa,TRUNG TÍNH,Ngoài miền/trung tính,Chung
+Mình nhận được hàng vào thứ ba,TRUNG TÍNH,Ngoài miền/trung tính,Mua sắm
+Môn học này có ba tín chỉ,TRUNG TÍNH,Ngoài miền/trung tính,Giáo dục
+Shop ở Hà Nội,TRUNG TÍNH,Ngoài miền/trung tính,Mua sắm
