@@ -1,75 +1,42 @@
 """
 Huấn luyện 5 mô hình x 3 phiên bản (Base, Tune 1, Tune 2) trên 2 bộ dữ liệu.
-  Base   : tham số theo báo cáo (còn lại là mặc định scikit-learn)
-  Tune 1 : cấu hình tốt nhất theo CV ở Bộ 1
-  Tune 2 : cấu hình tốt nhất theo CV ở Bộ 2
-Cả hai cấu hình tune được áp dụng cho cả 2 bộ dữ liệu -> kiểm tra độ bền của tham số.
+  Base   : tham số mặc định (xem tc.model_specs)
+  Tune 1 : cấu hình tốt nhất theo GridSearchCV (CV Macro-F1, chỉ trên tập train) của CHÍNH bộ dữ liệu đó
+  Tune 2 : cùng cấu hình Tune 1 nhưng đổi class_weight (None <-> 'balanced') với LR / SVM / RF;
+           MultinomialNB / ComplementNB không có class_weight nên Tune 2 = alpha tốt thứ 2 theo CV.
+=> Tune 1/2 luôn tự cập nhật theo dữ liệu đã làm sạch, không còn số cố định.
+   Cấu hình đã chọn được lưu results/configs_<bộ>.json (tự chọn lại khi dữ liệu train thay đổi).
 
 Đầu ra (thư mục results/):
   results_summary.csv / results_summary.xlsx   bảng tổng hợp duy nhất (30 dòng)
+  cv_ranking_<bộ>.csv                          xếp hạng đầy đủ mọi cấu hình theo CV (mean, std, hạng)
+  grid_<bộ>.csv + images/grid_<bộ>_<mô hình>.png  kết quả TỪNG cấu hình trong lưới (CV + test), đánh dấu Base/Tune 1/Tune 2
   images/cm_<bộ>_<mô hình>.png                 3 ma trận nhầm lẫn (Base/Tune1/Tune2) của mỗi mô hình
-  images/bars_<bộ>.png                         Macro-F1 và thời gian huấn luyện của mọi phiên bản
-  images/table_<bộ>.png                        ảnh bảng kết quả từng bộ
+  images/bars_<bộ>.png, images/table_<bộ>.png
 
-Cần train_compare.py cùng thư mục (dùng lại hàm tải dữ liệu & tiền xử lý).
-python train_versions.py
+Cần train_compare.py cùng thư mục.   python train_versions.py
 """
+import hashlib
+import json
 import os
-import time
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.base import clone
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (accuracy_score, confusion_matrix, f1_score,
                              precision_score, recall_score)
-from sklearn.model_selection import cross_val_score
-from sklearn.naive_bayes import ComplementNB, MultinomialNB
-from sklearn.svm import LinearSVC
+from sklearn.model_selection import GridSearchCV, ParameterGrid, cross_val_score
 
-import train_compare as tc            # load_ds1, load_ds2, clean_cached, timed_fit, ...
+import train_compare as tc            # load_ds1, load_ds2, clean_cached, model_specs, timed_fit, ...
 
-SEED = 42
 OUT = "results"
 IMG = f"{OUT}/images"
 os.makedirs(IMG, exist_ok=True)
-
-# ---------------------------------------------------------------------------
-# 3 phiên bản / mô hình: (lớp, tham số)
-# ---------------------------------------------------------------------------
-VERSIONS = {
-    "MultinomialNB": [
-        ("Base",   MultinomialNB, {}),
-        ("Tune 1", MultinomialNB, {"alpha": 0.05}),
-        ("Tune 2", MultinomialNB, {"alpha": 0.5}),
-    ],
-    "ComplementNB": [
-        ("Base",   ComplementNB, {}),
-        ("Tune 1", ComplementNB, {"alpha": 0.01}),
-        ("Tune 2", ComplementNB, {"alpha": 0.5}),
-    ],
-    "LogisticRegression": [
-        ("Base",   LogisticRegression, {"max_iter": 1000, "random_state": SEED}),
-        ("Tune 1", LogisticRegression, {"max_iter": 1000, "random_state": SEED, "C": 3}),
-        ("Tune 2", LogisticRegression, {"max_iter": 1000, "random_state": SEED, "C": 10,
-                                        "class_weight": "balanced"}),
-    ],
-    "LinearSVM": [
-        ("Base",   LinearSVC, {"random_state": SEED}),
-        ("Tune 1", LinearSVC, {"random_state": SEED, "C": 0.3}),
-        ("Tune 2", LinearSVC, {"random_state": SEED, "C": 0.3, "class_weight": "balanced"}),
-    ],
-    "RandomForest": [
-        ("Base",   RandomForestClassifier, {"n_estimators": 100, "n_jobs": -1, "random_state": SEED}),
-        ("Tune 1", RandomForestClassifier, {"n_estimators": 200, "n_jobs": -1, "random_state": SEED}),
-        ("Tune 2", RandomForestClassifier, {"n_estimators": 200, "n_jobs": -1, "random_state": SEED,
-                                            "class_weight": "balanced"}),
-    ],
-}
-HIDDEN = {"random_state", "n_jobs", "max_iter"}      # không hiển thị trong cột Params
+VERS = ("Base", "Tune 1", "Tune 2")
+HIDDEN = {"random_state", "n_jobs", "max_iter"}
 
 
 def show_params(p):
@@ -77,30 +44,110 @@ def show_params(p):
     return s or "mặc định"
 
 
-# ---------------------------------------------------------------------------
-def run_dataset(ds_name, loader, key):
-    print(f"\n{'=' * 78}\n{ds_name}\n{'=' * 78}")
+PCOLS = ["alpha", "C", "class_weight", "n_estimators"]
+
+
+def param_cols(est):
+    """Giá trị THỰC của từng tham số (kể cả mặc định); '-' nếu mô hình không có tham số đó."""
+    p = est.get_params()
+    return {c: (str(p[c]) if c in p else "-") for c in PCOLS}
+
+
+def make_estimator(name, params):
+    """Ước lượng gốc trong tc.model_specs() + tham số chọn thêm."""
+    return clone(tc.model_specs()[name][0]).set_params(**params)
+
+
+def _signature(Xtr, ytr):
+    h = hashlib.md5()
+    h.update(str(Xtr.shape).encode())
+    h.update(np.asarray(ytr).tobytes())
+    h.update(str(Xtr.nnz).encode() + str(round(float(Xtr.sum()), 6)).encode())
+    h.update(json.dumps({k: v[1] for k, v in tc.model_specs().items()}, sort_keys=True,
+                        default=str).encode())
+    return h.hexdigest()
+
+
+def _flip(cw):
+    return "balanced" if cw is None else None
+
+
+def select_configs(key, Xtr, ytr):
+    """Trả {model: {"Base": {}, "Tune 1": {...}, "Tune 2": {...}}}; chọn bằng CV trên train."""
+    sig = _signature(Xtr, ytr)
+    path = f"{OUT}/configs_{key}.json"
+    if os.path.exists(path):
+        saved = json.load(open(path, encoding="utf-8"))
+        if saved.get("signature") == sig:
+            print(f"[{key}] dùng cấu hình đã chọn ({path})")
+            return saved["configs"]
+    print(f"[{key}] chọn Tune 1 / Tune 2 bằng GridSearchCV trên tập train ...")
+    configs, ranks = {}, []
+    for name, (est, grid) in tc.model_specs().items():
+        gs = GridSearchCV(est, grid, scoring="f1_macro", cv=tc.CV, n_jobs=-1, refit=False)
+        gs.fit(Xtr, ytr)
+        r = pd.DataFrame(gs.cv_results_["params"])
+        r["mean"] = gs.cv_results_["mean_test_score"]
+        r["std"] = gs.cv_results_["std_test_score"]
+        r = r.sort_values("mean", ascending=False, kind="stable").reset_index(drop=True)
+        r.insert(0, "rank", r.index + 1)
+        best = {k: v for k, v in r.iloc[0].items() if k not in ("rank", "mean", "std")}
+        best = {k: (None if (isinstance(v, float) and np.isnan(v)) else v) for k, v in best.items()}
+        if "class_weight" in best:
+            t2 = dict(best); t2["class_weight"] = _flip(best["class_weight"])
+            how2 = "đổi class_weight"
+        else:                                    # Naive Bayes: alpha tốt thứ 2
+            t2 = {k: v for k, v in r.iloc[1].items() if k not in ("rank", "mean", "std")}
+            how2 = "alpha tốt thứ 2"
+        for k, v in list(best.items()):          # numpy -> python thuần để lưu JSON
+            best[k] = v.item() if hasattr(v, "item") else v
+        for k, v in list(t2.items()):
+            t2[k] = v.item() if hasattr(v, "item") else v
+        configs[name] = {"Base": {}, "Tune 1": best, "Tune 2": t2, "how2": how2}
+        r.insert(0, "model", name)
+        ranks.append(r)
+        print(f"\n  {name}: xếp hạng CV Macro-F1 (3-fold, trung bình ± độ lệch chuẩn)")
+        for _, x in r.head(5).iterrows():
+            p = {k: x[k] for k in r.columns if k not in ("model", "rank", "mean", "std") and not pd.isna(x[k])}
+            print(f"    #{int(x['rank'])}  {x['mean']:.4f} ± {x['std']:.4f}  {p}")
+        print(f"    -> Tune 1 = {best} | Tune 2 = {t2} ({how2})")
+    pd.concat(ranks, ignore_index=True).to_csv(f"{OUT}/cv_ranking_{key}.csv", index=False,
+                                               encoding="utf-8-sig")
+    json.dump({"signature": sig, "configs": configs}, open(path, "w", encoding="utf-8"),
+              ensure_ascii=False, indent=1)
+    return configs
+
+
+def prepare(loader, key):
     Xtr_raw, Xte_raw, ytr, yte = loader()
     Xtr_txt = tc.clean_cached(Xtr_raw, f"{key}_train")
     Xte_txt = tc.clean_cached(Xte_raw, f"{key}_test")
-    print(f"Train={len(ytr)}  Test={len(yte)}  %Tích cực(train)={ytr.mean():.2%}")
-
     tfidf = TfidfVectorizer(max_features=5000, ngram_range=(1, 2), sublinear_tf=True)
     Xtr = tfidf.fit_transform(Xtr_txt)          # chỉ fit trên train
-    Xte = tfidf.transform(Xte_txt)
+    return Xtr, tfidf.transform(Xte_txt), ytr, yte
+
+
+# ---------------------------------------------------------------------------
+def run_dataset(ds_name, loader, key):
+    print(f"\n{'=' * 78}\n{ds_name}\n{'=' * 78}")
+    Xtr, Xte, ytr, yte = prepare(loader, key)
+    print(f"Train={len(ytr)}  Test={len(yte)}  %Tích cực(train)={ytr.mean():.2%}")
+    cfgs = select_configs(key, Xtr, ytr)
 
     rows, preds = [], {}
-    for name, versions in VERSIONS.items():
-        for ver, cls, params in versions:
-            est = cls(**params)
-            cv = cross_val_score(est, Xtr, ytr, scoring="f1_macro",
-                                 cv=tc.CV, n_jobs=-1).mean()
+    for name in tc.model_specs():
+        for ver in VERS:
+            params = cfgs[name][ver]
+            est = make_estimator(name, params)
+            cv = cross_val_score(est, Xtr, ytr, scoring="f1_macro", cv=tc.CV, n_jobs=-1).mean()
             model, t_train = tc.timed_fit(est, Xtr, ytr)
             pred, t_infer = tc.timed_predict(model, Xte)
             preds[(name, ver)] = pred
+            how = {"Base": "mặc định", "Tune 1": "tốt nhất theo CV",
+                   "Tune 2": cfgs[name]["how2"]}[ver]
             rows.append({
                 "Dataset": ds_name, "Model": name, "Version": ver,
-                "Params": show_params(params),
+                "Params": show_params(params), **param_cols(est), "Cách chọn": how,
                 "Accuracy": accuracy_score(yte, pred),
                 "Macro-Precision": precision_score(yte, pred, average="macro"),
                 "Macro-Recall": recall_score(yte, pred, average="macro"),
@@ -112,23 +159,73 @@ def run_dataset(ds_name, loader, key):
                   f"train={t_train:.3f}s  | {show_params(params)}")
     df = pd.DataFrame(rows)
     plot_confusions(df, preds, yte, key, ds_name)
+    grid_report(key, ds_name, Xtr, ytr, Xte, yte, cfgs)
     return df
 
+
+
+# ---------------------------------------------------------------------------
+# KẾT QUẢ TỪNG THAM SỐ TRONG LƯỚI
+# ---------------------------------------------------------------------------
+def grid_report(key, ds_name, Xtr, ytr, Xte, yte, cfgs):
+    """Chạy MỌI cấu hình trong lưới: CV (trên train) + kết quả test để minh hoạ.
+    Chỉ CV được dùng để chọn Tune 1/2; cột test chỉ để quan sát, không dùng chọn tham số."""
+    rows = []
+    for name, (est, grid) in tc.model_specs().items():
+        for params in ParameterGrid(grid):
+            e = clone(est).set_params(**params)
+            sc = cross_val_score(e, Xtr, ytr, scoring="f1_macro", cv=tc.CV, n_jobs=-1)
+            m, t_train = tc.timed_fit(e, Xtr, ytr)
+            pred, _ = tc.timed_predict(m, Xte)
+            tags = [v for v in ("Tune 1", "Tune 2") if cfgs[name][v] == params]
+            rows.append({"Dataset": ds_name, "Model": name, "Params": show_params(params),
+                         **param_cols(e),
+                         "CV Macro-F1": sc.mean(), "CV std": sc.std(),
+                         "Test Accuracy": accuracy_score(yte, pred),
+                         "Test Macro-F1": f1_score(yte, pred, average="macro"),
+                         "T_train (s)": t_train, "Được chọn làm": " + ".join(tags)})
+    g = pd.DataFrame(rows)
+    g["Hạng CV"] = g.groupby("Model")["CV Macro-F1"].rank(ascending=False, method="first").astype(int)
+    g = g.sort_values(["Model", "Hạng CV"]).reset_index(drop=True)
+    g.to_csv(f"{OUT}/grid_{key}.csv", index=False, encoding="utf-8-sig")
+
+    print(f"\n--- Kết quả từng tham số trong lưới ({ds_name}) ---")
+    for name, sub in g.groupby("Model", sort=False):
+        print(f"\n{name}")
+        cols_p = [c for c in PCOLS if (sub[c] != "-").any()]
+        print(sub[["Hạng CV", *cols_p, "CV Macro-F1", "CV std", "Test Macro-F1",
+                   "T_train (s)", "Được chọn làm"]].round(4).to_string(index=False))
+        fig, ax = plt.subplots(figsize=(9, 0.42 * len(sub) + 1.6))
+        sub = sub.iloc[::-1]
+        colors = ["#d9534f" if "Tune 1" in t else "#f0ad4e" if "Tune 2" in t else "#4a7db8"
+                  for t in sub["Được chọn làm"]]
+        ax.barh(sub["Params"], sub["CV Macro-F1"], xerr=sub["CV std"], color=colors, alpha=.85)
+        ax.scatter(sub["Test Macro-F1"], sub["Params"], color="black", marker="D", s=22, zorder=3)
+        lo = (sub["CV Macro-F1"] - sub["CV std"]).min()
+        ax.set_xlim(max(0, lo - 0.02), min(1, sub[["CV Macro-F1", "Test Macro-F1"]].max().max() + 0.02))
+        for y, (_, r) in enumerate(sub.iterrows()):
+            if r["Được chọn làm"]:
+                ax.text(ax.get_xlim()[0], y, f" {r['Được chọn làm']}", va="center", fontsize=8, color="white",
+                        fontweight="bold")
+        ax.set_xlabel("Macro-F1   (thanh = CV trên train, ◆ = test)")
+        ax.set_title(f"{name} - {ds_name}\nđỏ = Tune 1, cam = Tune 2", fontsize=10)
+        plt.tight_layout(); plt.savefig(f"{IMG}/grid_{key}_{name}.png", dpi=150); plt.close()
+    return g
 
 # ---------------------------------------------------------------------------
 # HÌNH ẢNH
 # ---------------------------------------------------------------------------
 def plot_confusions(df, preds, yte, key, ds_name):
     """Mỗi mô hình 1 ảnh: 3 ma trận nhầm lẫn (Base / Tune 1 / Tune 2)."""
-    for name in VERSIONS:
+    for name in df["Model"].unique():
         fig, axes = plt.subplots(1, 3, figsize=(13, 4))
-        for ax, (ver, _, params) in zip(axes, VERSIONS[name]):
+        for ax, ver in zip(axes, VERS):
             r = df[(df["Model"] == name) & (df["Version"] == ver)].iloc[0]
             sns.heatmap(confusion_matrix(yte, preds[(name, ver)]), annot=True, fmt="d",
                         cmap="Blues", cbar=False, ax=ax,
                         xticklabels=["Tiêu cực", "Tích cực"],
                         yticklabels=["Tiêu cực", "Tích cực"])
-            ax.set_title(f"{ver}: {show_params(params)}\n"
+            ax.set_title(f"{ver}: {r['Params']}\n"
                          f"Acc={r['Accuracy']:.4f}  Macro-F1={r['Macro-F1']:.4f}", fontsize=9)
             ax.set_xlabel("Dự đoán"); ax.set_ylabel("Thực tế")
         fig.suptitle(f"{name} - {ds_name}", fontweight="bold")

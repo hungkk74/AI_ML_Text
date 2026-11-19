@@ -120,15 +120,26 @@ def load_ds1():
     ds = "Bộ 1"
     p = kagglehub.dataset_download("linhlpv/vietnamese-sentiment-analyst")
     files = sorted(glob.glob(f"{p}/**/*.csv", recursive=True))
-    parts = [pd.read_csv(f) for f in files]
-    for f, d in zip(files, parts):
-        print(f"  [{ds}] file {os.path.basename(f)}: {len(d)} dòng")
+    TEXT = ("text", "sentence", "comment", "content", "review")
+    LAB = ("label", "sentiment", "labels", "rating")
+    parts, total = [], 0
+    for f in files:                      # nhận diện cột RIÊNG từng file -> không mất dòng khi tên cột khác nhau
+        d = pd.read_csv(f)
+        tcol = next((c for c in d.columns if str(c).lower() in TEXT), None)
+        lcol = next((c for c in d.columns if str(c).lower() in LAB), None)
+        print(f"  [{ds}] file {os.path.basename(f)}: {len(d)} dòng, cột văn bản={tcol}, cột nhãn={lcol}")
+        total += len(d)
+        if tcol is None or lcol is None:
+            print("     -> bỏ qua file này (không nhận diện được cột văn bản/nhãn)")
+            continue
+        d = d[[tcol, lcol]].copy()
+        d.columns = ["text", "label"]
+        parts.append(d)
     df = pd.concat(parts, ignore_index=True)
-    log_step(ds, "Tổng số dòng gốc (ghép các file)", len(df))
-    tcol = next(c for c in df.columns if c.lower() in ("text", "sentence", "comment", "content", "review"))
-    lcol = next(c for c in df.columns if c.lower() in ("label", "sentiment", "labels", "rating"))
-    df = df[[tcol, lcol]].dropna()
-    df.columns = ["text", "label"]
+    log_step(ds, "Tổng số dòng gốc (ghép các file)", total, len(df))
+    n = len(df)
+    df = df.dropna()
+    log_step(ds, "Bỏ dòng thiếu văn bản hoặc nhãn", n, len(df))
     print(f"  [{ds}] phân bố nhãn gốc: {df['label'].value_counts().to_dict()}")
     n = len(df)
     df["label"] = df["label"].map({"POS": 1, "NEG": 0, "pos": 1, "neg": 0})

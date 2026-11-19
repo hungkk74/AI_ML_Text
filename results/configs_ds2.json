@@ -1,0 +1,61 @@
+{
+ "signature": "31a976986989f8d111c33cf623807568",
+ "configs": {
+  "MultinomialNB": {
+   "Base": {},
+   "Tune 1": {
+    "alpha": 1.0
+   },
+   "Tune 2": {
+    "alpha": 0.5
+   },
+   "how2": "alpha tốt thứ 2"
+  },
+  "ComplementNB": {
+   "Base": {},
+   "Tune 1": {
+    "alpha": 0.5
+   },
+   "Tune 2": {
+    "alpha": 1.0
+   },
+   "how2": "alpha tốt thứ 2"
+  },
+  "LogisticRegression": {
+   "Base": {},
+   "Tune 1": {
+    "C": 3.0,
+    "class_weight": "balanced"
+   },
+   "Tune 2": {
+    "C": 3.0,
+    "class_weight": null
+   },
+   "how2": "đổi class_weight"
+  },
+  "LinearSVM": {
+   "Base": {},
+   "Tune 1": {
+    "C": 0.3,
+    "class_weight": null
+   },
+   "Tune 2": {
+    "C": 0.3,
+    "class_weight": "balanced"
+   },
+   "how2": "đổi class_weight"
+  },
+  "RandomForest": {
+   "Base": {},
+   "Tune 1": {
+    "class_weight": null,
+    "n_estimators": 200
+   },
+   "Tune 2": {
+    "class_weight": "balanced",
+    "n_estimators": 200
+   },
+   "how2": "đổi class_weight"
+  }
+ }
+}
