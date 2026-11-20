@@ -194,7 +194,7 @@ def model_specs():
     return {
         "MultinomialNB": (MultinomialNB(),
                           {"alpha": [0.01, 0.05, 0.1, 0.5, 1.0]}),
-        "ComplementNB": (ComplementNB(),
+        "ComplementNB": (ComplementNB(),git
                          {"alpha": [0.01, 0.05, 0.1, 0.5, 1.0]}),
         "LogisticRegression": (LogisticRegression(max_iter=1000, random_state=SEED),
                                {"C": [0.1, 1, 3, 10, 30],
